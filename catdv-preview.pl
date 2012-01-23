@@ -9,18 +9,17 @@
 
 use File::Basename;
 use File::Copy;
+use Sys::Syslog;
 
-# where are our previews?
+openlog($0,'','user');
 
-$previewdir = "/Users/Shared/CatDV Docs/Proxies";
+require "conf/catdv.conf";
 
-# what kind of previews are we making?  (mov, mp4, m4v, etc)
-
-$previewextension = "mp4";
-
-# where do we want to temporarily copy the previews to before adding to AW index?
-
-$awproxypath = "/tmp";
+if ($ARGV[0] eq ''){
+	print "\nusage: catdv-preview.pl video_file \n\n";
+	print "video_file: the full path of the original media location (ex. \"/path/to/MyVideo.mov\")\n\n";
+	exit	
+}
 
 # use File::Basename to split up and reformat our string
 
@@ -31,21 +30,28 @@ my ($name,$path,$suffix) = fileparse($fullpath, qr/\.[^.]*/);
 
 $previewloc = "$previewdir$path$name.$previewextension";
 
-if(-e $previewloc){
+syslog('err',"Looking for file \@$previewloc");
 
+if(-e $previewloc){
+	syslog('err',"Proxy for $ARGV[0] found at $previewloc");
 	# if we have a proxy, move it to our temp location
 	
 	$awproxyloc = "$awproxypath/$name.$previewextension";
 	
-	`cp \"$previewloc\" \"$awproxyloc\"`;
+	`ditto \"$previewloc\" \"$awproxyloc\"`;
 	
+	if(-e $awproxyloc){
+		syslog('err',"$name.$previewextension copied to $awproxypath successfully");
 	} else {
+		syslog('err',"$name.$previewextension did not get copied to $awproxypath");
+	}
 	
-	# if we can't find the movie, generate a proxy
+} else {
+	syslog('err',"No proxy found for $ARGV[0].  Skipping.");
 	
-	# here we would call our standard proxy generation script - see my qt_tools example for more info
-	
-	$awproxyloc = $generatedproxyloc;
+	# if we can't find the movie, we could generate a proxy or set $awproxyloc to a fixed slate for no preview
+	# here we would call our standard proxy generation script - see my qt_tools example for more info	
 }
 
 print $awproxyloc;
+closelog;

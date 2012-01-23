@@ -28,7 +28,7 @@ openlog($0,'','user');
 
 #grab our variables from our conf file;
 
-require "aw-queue.conf";
+require "conf/aw-queue.conf";
 
 #this is the path for the original media queue to be archived/restored
 $full_queue_path = $ARGV[0];
