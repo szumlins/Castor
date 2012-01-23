@@ -16,10 +16,11 @@ sub run_config{
 		exit;
 	}
 	
-	print "\nWelcome to the Castor configurator.  We will ask a few questions to get your environment set up\n";
-	print "Anything contained in [] is the default.  Simply hitting enter will set it as default.\n\n";
+	print "\nWelcome to the Castor configurator.  We will ask a few questions to get\n"; 
+	print "your environment set up. Anything contained in [] is the default.  Simply\n";
+	print "hitting enter will set it as default.\n\n";
 	
-	print "Username you use to log in to PresSTORE (must have access to index) []: ";
+	print "Username you use to log in to PresSTORE []: ";
 	$username = <>;
 	print "Password for this user []: ";
 	$password = <>;
@@ -53,7 +54,7 @@ sub run_config{
 	$i=0;
 	
 	if($hostname eq ''){
-		print "Error: nsdchat could not look up hostname.  Is PresSTORE running on this computer?\n";
+		print "Error: nsdchat could not look up hostname.  Is PresSTORE running?\n";
 		$i++;
 	}
 	
@@ -168,7 +169,7 @@ sub summary{
 	print "Archive Index: $archiveindex\n";
 	print "Archive Schedule: $archivetime:00\n";
 	print "Restore Frequency: $original minutes\n\n";
-	print "Write config to file? WARNING! This WILL overwrite your existing config files [y/n]: ";
+	print "Write config to file?\nWARNING! This WILL overwrite your existing config files [y/n]: ";
 
 	$submit = <>;
 	$submit =~ s/\n//;	
@@ -195,7 +196,7 @@ sub validate{
 		`/bin/chmod 775 /Library/Logs/aw-queue.log`;
 		`/bin/chmod 775 /Library/Logs/aw-queue-err.log`;
 		print "\n";
-		print "You will now need to edit /usr/local/Castor/conf/metadata.conf by hand to complete the install\n\n";
+		print "You will now need to edit\n\n/usr/local/Castor/conf/metadata.conf\n\nby hand to complete the install\n\n";
 	} elsif($_[0] eq "n"){
 		print "Aborting config. Nothing has been written to disk.\n";
 	} else {
@@ -207,7 +208,7 @@ sub validate{
 }
 
 sub write_awconf{
-	open AWCONF, ">", "conf/aw-queue.conf" or die $!;
+	open AWCONF, ">", "/usr/local/Castor/conf/aw-queue.conf" or die $!;
 	
 	print AWCONF "##################\n";
 	print AWCONF "# User variables #\n";
@@ -233,7 +234,7 @@ sub write_awconf{
 }
 
 sub write_catdvconf{
-	open CDVCONF, ">", "conf/catdv.conf" or die $!;
+	open CDVCONF, ">", "/usr/local/Castor/conf/catdv.conf" or die $!;
 	
 	print CDVCONF "###################\n";
 	print CDVCONF "# User Variables  #\n";
@@ -261,10 +262,13 @@ sub write_catdvconf{
 sub write_launchd{
 	#make sure they aren't running already
 	
-	print "Trying to stop LaunchDaemons\n";
-	
-	`/bin/launchctl unload -w /Library/LaunchDaemons/org.provideotech.aw-queue-archive.plist`;
-	`/bin/launchctl unload -w /Library/LaunchDaemons/org.provideotech.aw-queue-restore.plist`;	
+	if(-e "/Library/LaunchDaemons/org.provideotech.aw-queue-archive.plist" && -e "/Library/LaunchDaemons/org.provideotech.aw-queue-archive.plist"){
+		print "Trying to stop LaunchDaemons\n";
+		`/bin/launchctl unload -w /Library/LaunchDaemons/org.provideotech.aw-queue-archive.plist`;
+		`/bin/launchctl unload -w /Library/LaunchDaemons/org.provideotech.aw-queue-restore.plist`;	
+	} else {
+		print "Launchd plist files don't exist yet, no need to stop\n";
+	}
 	
 	#open the files for writing
 	print "Trying to open plist files\n";
@@ -333,9 +337,13 @@ sub write_launchd{
 	
 	print "Setting proper launchd permissions\n";
 	
-	`/bin/chown root:wheel /Library/LaunchDaemons/org.provideotech.aw-queue*`;
-	`/bin/chmod 644 /Library/LaunchDaemons/org.provideotech.aw-queue*`;
-	
+	if(-e "/Library/LaunchDaemons/org.provideotech.aw-queue-archive.plist" && -e "/Library/LaunchDaemons/org.provideotech.aw-queue-archive.plist"){
+		`/usr/sbin/chown root:wheel /Library/LaunchDaemons/org.provideotech.aw-queue*`;
+		`/bin/chmod 644 /Library/LaunchDaemons/org.provideotech.aw-queue*`;
+	} else {
+		print "Error: Could not locate launchd plists.  Please verify by hand\n";
+	}
+
 	#start up
 	
 	print "Trying to start newly created LaunchDaemons\n";

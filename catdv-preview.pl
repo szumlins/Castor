@@ -13,7 +13,7 @@ use Sys::Syslog;
 
 openlog($0,'','user');
 
-require "conf/catdv.conf";
+require "/usr/local/Castor/conf/catdv.conf";
 
 if ($ARGV[0] eq ''){
 	print "\nusage: catdv-preview.pl video_file \n\n";

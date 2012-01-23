@@ -10,7 +10,7 @@ use XML::Simple;
 use Data::Dumper;
 use File::Basename;
 
-require "conf/catdv.conf";
+require "/usr/local/Castor/conf/catdv.conf";
 
 
 if ($ARGV[0] eq '' && $ARGV[1] eq ''){
@@ -49,7 +49,7 @@ if($ARGV[0] eq "debug"){
 $data = $xml->XMLin($xmltarget);
 
 our %metadata = ();
-require "metadata.conf";
+require "/usr/local/Castor/conf/metadata.conf";
 
 # echo output back to PresSTORE.  Simply add each of your key/value pairs to the next line.
 # Don't forget to escape the curly braces for the values.
