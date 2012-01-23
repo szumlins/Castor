@@ -17,7 +17,7 @@ require "/usr/local/Castor/conf/catdv.conf";
 
 if ($ARGV[0] eq ''){
 	print "\nusage: catdv-preview.pl video_file \n\n";
-	print "video_file: the full path of the original media location (ex. \"/path/to/MyVideo.mov\")\n\n";
+	print "video_file: the full path of the original media location\n\t (ex. \"/path/to/MyVideo.mov\")\n\n";
 	exit	
 }
 
