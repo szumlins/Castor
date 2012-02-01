@@ -194,9 +194,12 @@ sub validate{
 		`/bin/chmod 777 /usr/local/Castor/queues/archive-queue.txt`;
 		`/bin/chmod 777 /usr/local/Castor/queues/restore-queue.txt`;
 		`/bin/chmod 775 /Library/Logs/aw-queue.log`;
-		`/bin/chmod 775 /Library/Logs/aw-queue-err.log`;
+		`/bin/chmod 775 /Library/Logs/aw-queue-err.log`;		
 		print "\n";
 		print "You will now need to edit\n\n/usr/local/Castor/conf/metadata.conf\n\nby hand to complete the install\n\n";
+		print "Copy and paste the following command to edit\n\n";
+		print "open -a TextEdit /usr/local/Castor/conf/metadata.conf\n\n";
+		print "Configuration Script Complete!\n";
 	} elsif($_[0] eq "n"){
 		print "Aborting config. Nothing has been written to disk.\n";
 	} else {
