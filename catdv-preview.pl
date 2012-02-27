@@ -36,14 +36,14 @@ if(-e $previewloc){
 	syslog('err',"Proxy for $ARGV[0] found at $previewloc");
 	# if we have a proxy, move it to our temp location
 	
-	$awproxyloc = "$awproxypath/$name.$previewextension";
+	$awproxyloc = "$awproxypath/$name$previewextension";
 	
-	`ditto \"$previewloc\" \"$awproxyloc\"`;
+	copy($previewloc,$awproxyloc) or die "Copy failed: $!";
 	
 	if(-e $awproxyloc){
-		syslog('err',"$name.$previewextension copied to $awproxypath successfully");
+		syslog('err',"$name$previewextension copied to $awproxypath successfully");
 	} else {
-		syslog('err',"$name.$previewextension did not get copied to $awproxypath");
+		syslog('err',"$name$previewextension did not get copied to $awproxypath");
 	}
 	
 } else {
