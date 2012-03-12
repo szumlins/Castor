@@ -188,6 +188,7 @@ sub validate{
 		write_launchd();
 		print "Setting up queue files and permissions\n";
 		`/bin/mkdir -p /usr/local/Castor/queues`;
+		`/bin/mkdir -p /usr/local/Castor/tmp`;
 		`/usr/bin/touch /usr/local/Castor/queues/archive-queue.txt`;
 		`/usr/bin/touch /usr/local/Castor/queues/restore-queue.txt`;
 		`/usr/bin/touch /Library/Logs/aw-queue.log`;

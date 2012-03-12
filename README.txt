@@ -33,17 +33,25 @@ Maybe do a GUI at some point
 
 BUG FIXES
 =================
-1-24-2013
+3-12-2012
+Added folder creation to configure.pl, fixes issue where if directories didn't
+exist configure would fail.
+
+Modified metadata.conf file to have correct format in comments
+
+1-24-2012
 Fixed problems with relative paths (not good practice)
 Fixed issue with installer and permissions
 
 CHANGELOG
 =================
-1-24-2013
+3-12-2012
 Bug fixes
 
+1-24-2012
+Bug fixes
 
-1-23-2013
+1-23-2012
 
 Rebranded software as Castor
 
