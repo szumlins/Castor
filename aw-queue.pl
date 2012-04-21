@@ -192,7 +192,15 @@ if($method eq 'archive'){
 	$i = 0;
 	$j = 0;
 	while (<FILE>){
+		#these regexps attempt to escape non-standard characters in file names
 		$_ =~ s/\n//;
+		$_ =~ s/'/\'/g;
+		$_ =~ s/\#/\\#/g;
+		$_ =~ s/\(/\\(/g;
+		$_ =~ s/\)/\\)/g;
+		$_ =~ s/"/\"/g;
+		$_ =~ s/\&/\\&/g;
+		$_ =~ s/\,/\\,/g;
 		@handles[$i] = `$nsdchat ArchiveSelection $archive_selection addentry {$_}`;		
 		if (length(@handles[$i])<2){
 			$geterr = `$nsdchat geterror`;
@@ -295,7 +303,16 @@ if($method eq 'restore'){
 	$j = 0;
 	
 	while (<FILE>){	
+		
 		$_ =~ s/\n//;
+		$_ =~ s/'/\'/g;
+		$_ =~ s/\#/\\#/g;
+		$_ =~ s/\(/\\(/g;
+		$_ =~ s/\)/\\)/g;
+		$_ =~ s/"/\"/g;
+		$_ =~ s/\&/\\&/g;
+		$_ =~ s/\,/\\,/g;
+		
 		if (defined($_)){
 			$date = `date`;
 			$date =~ s/\n//;
