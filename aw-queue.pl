@@ -375,7 +375,7 @@ if($method eq 'restore'){
 		exit;
 	} else {
 		#submit restore job to run
-		$job_id = `$nsdchat RestoreSelection $restore_selection submit yes`;
+		$job_id = `$nsdchat RestoreSelection $restore_selection submit`;
 		$job_id =~ s/\n//;		
 		
 		if($job_id eq ''){
