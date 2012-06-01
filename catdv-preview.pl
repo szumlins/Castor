@@ -28,7 +28,7 @@ my ($name,$path,$suffix) = fileparse($fullpath, qr/\.[^.]*/);
 
 #compile our full path to our proxy
 
-$previewloc = "$previewdir$path$name.$previewextension";
+$previewloc = "$previewdir$path$name$previewextension";
 
 syslog('err',"Looking for file \@$previewloc");
 
