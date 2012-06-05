@@ -233,7 +233,7 @@ sub write_awconf{
 	print AWCONF "\n";	
 	print AWCONF "# Default nsdchat port is 9001.  Do not change unless you specifically changed this in your PresSTORE server config\n";
 	print AWCONF "\n";
-	print AWCONF "\$port = \"9001\"\;";
+	print AWCONF "\$port = \"$port\"\;";
 	
 	close AWCONF;
 }
