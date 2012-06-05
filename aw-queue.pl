@@ -201,7 +201,7 @@ if($method eq 'archive'){
 		$_ =~ s/"/\"/g;
 		$_ =~ s/\&/\\&/g;
 		$_ =~ s/\,/\\,/g;
-		@handles[$i] = `$nsdchat ArchiveSelection $archive_selection addentry {$_}`;		
+		@handles[$i] = `$nsdchat ArchiveSelection $archive_selection addentry {"$_"}`;		
 		if (length(@handles[$i])<2){
 			$geterr = `$nsdchat geterror`;
 			$geterr =~ s/\n//;		
@@ -317,7 +317,7 @@ if($method eq 'restore'){
 			$date = `date`;
 			$date =~ s/\n//;
 			print LOGFILE "$date -- Looking up archive handle for file \"$_\" in index \"$index\"\n";
-			@archive_handles[$i] = `$nsdchat ArchiveEntry handle $client {$_} $index`;	
+			@archive_handles[$i] = `$nsdchat ArchiveEntry handle $client {"$_"} $index`;	
 			chomp(@archive_handles[$i]);
 			
 			if (length(@archive_handles[$i])<2){
