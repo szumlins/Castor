@@ -201,6 +201,7 @@ if($method eq 'archive'){
 		$_ =~ s/"/\"/g;
 		$_ =~ s/\&/\\&/g;
 		$_ =~ s/\,/\\,/g;
+		$_ =~ s/\;/\\;/g;
 		@handles[$i] = `$nsdchat ArchiveSelection $archive_selection addentry {"$_"}`;		
 		if (length(@handles[$i])<2){
 			$geterr = `$nsdchat geterror`;
