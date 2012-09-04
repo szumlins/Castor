@@ -313,6 +313,7 @@ if($method eq 'restore'){
 		$_ =~ s/"/\"/g;
 		$_ =~ s/\&/\\&/g;
 		$_ =~ s/\,/\\,/g;
+		$_ =~ s/\;/\\;/g;
 		
 		if (defined($_)){
 			$date = `date`;
